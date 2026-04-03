@@ -1,0 +1,34 @@
+def fetch_user_data(user_ids):
+    import requests
+    results = []
+    for id in user_ids:
+        r = requests.get("https://api.example.com/users/" + id)
+        data = r.json()
+        results.append(data['name'])
+    return results
+
+
+def calculate_average(numbers):
+    total = 0
+    for n in numbers:
+        total = total + n
+    avg = total / len(numbers)
+    return avg
+
+
+class DataProcessor:
+    def __init__(self):
+        self.data = []
+        self.cache = {}
+
+    def process(self, items):
+        for item in items:
+            if item not in self.cache:
+                # expensive computation
+                result = item * item + item / 2
+                self.cache[item] = result
+            self.data.append(self.cache[item])
+        return self.data
+
+    def reset(self):
+        self.data = []
